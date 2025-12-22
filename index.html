@@ -2,28 +2,54 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel de Trabajadores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Trabajadores</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
 </head>
 <body class="container">
+
     <header>
-        <h1>👷 Gestión de Trabajadores</h1>
+        <hgroup>
+            <h1>👷 Gestión de Trabajadores</h1>
+            <h2>Panel de administración Full Stack</h2>
+        </hgroup>
     </header>
-    
+
     <main>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Cargo</th>
-                    <th>Salario</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-cuerpo">
-                </tbody>
-        </table>
+        <section id="formulario">
+            <h3>➕ Añadir Nuevo Trabajador</h3>
+            <form id="workerForm">
+                <div class="grid">
+                    <input type="text" id="nombre" placeholder="Nombre" required>
+                    <input type="text" id="apellido" placeholder="Apellido" required>
+                </div>
+                <div class="grid">
+                    <input type="text" id="dni" placeholder="DNI" required>
+                    <input type="text" id="cargo" placeholder="Cargo">
+                    <input type="number" id="salario" placeholder="Salario">
+                </div>
+                <button type="submit">Guardar Trabajador</button>
+            </form>
+        </section>
+
+        <hr> <section id="tabla">
+            <h3>📋 Lista de Personal</h3>
+            <figure>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Cargo</th>
+                            <th>Salario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-cuerpo">
+                        </tbody>
+                </table>
+            </figure>
+        </section>
     </main>
 
     <script src="app.js"></script>

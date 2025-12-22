@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Personal Pro</title>
+    <title>Sistema de Gestión de Personal</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
         .header-acciones { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        /* REGLAS PARA EL PDF (IMPRESIÓN) */
         @media print { 
-            .no-print, button, #seccion-formulario, #buscador-cont { display: none !important; }
-            body { background: white; color: black; }
+            #seccion-formulario, #buscador-cont, .no-print, button { display: none !important; }
+            body { background: white !important; color: black !important; padding: 0; }
+            table { width: 100%; border: 1px solid #ccc; }
+            tfoot { display: table-footer-group; }
         }
     </style>
 </head>
 <body class="container">
     <header>
-        <h1>👷 Sistema de Gestión de Personal</h1>
+        <h1>👷 Gestión de Personal</h1>
     </header>
 
     <main>
@@ -42,7 +45,7 @@
         <section id="seccion-tabla">
             <div class="header-acciones">
                 <h3>📋 Lista de Personal</h3>
-                <div id="buscador-cont" style="display: flex; gap: 10px;">
+                <div id="buscador-cont" style="display: flex; gap: 10px; align-items: center;">
                     <button class="outline contrast" onclick="generarPDF()">📄 PDF</button>
                     <button class="outline contrast" onclick="exportarExcel()">📊 Excel</button>
                     <input type="search" id="buscador" placeholder="🔍 Buscar..." style="max-width: 250px; margin: 0;">
@@ -61,7 +64,7 @@
                         </tr>
                     </thead>
                     <tbody id="tabla-cuerpo"></tbody>
-                    <tfoot id="tabla-pie" style="font-weight: bold; background: #f9f9f9;"></tfoot>
+                    <tfoot id="tabla-pie" style="font-weight: bold; background: #f1f1f1;"></tfoot>
                 </table>
             </figure>
         </section>

@@ -3,43 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Trabajadores</title>
+    <title>Sistema de Gestión de Personal</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        /* Un pequeño ajuste para que el buscador se vea mejor en móviles */
+        .header-tabla {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        @media (min-width: 768px) {
+            .header-tabla {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body class="container">
 
     <header>
         <hgroup>
             <h1>👷 Gestión de Trabajadores</h1>
-            <h2>Panel de administración Full Stack</h2>
+            <h2>Panel Administrativo Full Stack (D1 + Hono + Pages)</h2>
         </hgroup>
     </header>
 
     <main>
-        <section id="formulario">
-            <h3>➕ Añadir Nuevo Trabajador</h3>
-            <form id="workerForm">
-                <div class="grid">
-                    <input type="text" id="nombre" placeholder="Nombre" required>
-                    <input type="text" id="apellido" placeholder="Apellido" required>
-                </div>
-                <div class="grid">
-                    <input type="text" id="dni" placeholder="DNI" required>
-                    <input type="text" id="cargo" placeholder="Cargo">
-                    <input type="number" id="salario" placeholder="Salario">
-                </div>
-                <button type="submit">Guardar Trabajador</button>
-            </form>
+        <section id="seccion-formulario">
+            <article>
+                <header>
+                    <h3 id="titulo-form">➕ Añadir Nuevo Trabajador</h3>
+                </header>
+                <form id="workerForm">
+                    <div class="grid">
+                        <input type="text" id="nombre" placeholder="Nombre" required>
+                        <input type="text" id="apellido" placeholder="Apellido" required>
+                    </div>
+                    <div class="grid">
+                        <input type="text" id="dni" placeholder="DNI" required>
+                        <input type="text" id="cargo" placeholder="Cargo">
+                        <input type="number" id="salario" placeholder="Salario">
+                    </div>
+                    <footer>
+                        <button type="submit" id="btn-guardar">Guardar Trabajador</button>
+                    </footer>
+                </form>
+            </article>
         </section>
 
-        <hr> <section id="tabla">
-            <h3>📋 Lista de Personal</h3>
+        <hr>
+
+        <section id="seccion-tabla">
+            <div class="header-tabla">
+                <h3>📋 Lista de Personal</h3>
+                <input type="search" id="buscador" placeholder="🔍 Buscar por nombre o cargo..." style="max-width: 350px;">
+            </div>
+
             <figure>
-                <table>
+                <table role="grid">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
+                            <th>Trabajador</th>
                             <th>Cargo</th>
                             <th>Salario</th>
                             <th>Acciones</th>

@@ -1,5 +1,5 @@
 // Configuración inicial
-const API_URL = 'https://tu-worker.tu-usuario.workers.dev/api/trabajadores';
+const API_URL = 'https://crud-trabajadores.mauxmora.workers.dev';
 
 // Estado de la aplicación
 let trabajadoresLocales = [];

@@ -1,121 +1,114 @@
-const API_URL = "https://crud-trabajadores.mauxmora.workers.dev/api/trabajadores";
-let trabajadoresLocales = []; 
-let editandoId = null; 
+// Configuración inicial
+const API_URL = 'https://tu-worker.tu-usuario.workers.dev/api/trabajadores';
 
-// CARGAR DATOS
+// Estado de la aplicación
+let trabajadoresLocales = [];
+
+// --- INICIALIZACIÓN ---
+document.addEventListener('DOMContentLoaded', () => {
+    cargarTrabajadores();
+    configurarEscuchadores();
+});
+
+// --- LÓGICA DE INTERFAZ (MODAL) ---
+const modal = document.getElementById('modal-trabajador');
+const formulario = document.getElementById('form-trabajador');
+
+function abrirModal() {
+    formulario.reset(); // Limpia el formulario
+    // Si estuviéramos editando, aquí cargaríamos los datos en los inputs
+    modal.setAttribute('open', 'true');
+}
+
+function cerrarModal() {
+    modal.removeAttribute('open');
+}
+
+// --- COMUNICACIÓN CON EL BACKEND (API) ---
+
+// 1. Obtener todos los trabajadores
 async function cargarTrabajadores() {
     try {
         const res = await fetch(API_URL);
+        if (!res.ok) throw new Error('Error al obtener datos');
+        
         trabajadoresLocales = await res.json();
         renderizarTabla(trabajadoresLocales);
-    } catch (e) { console.error("Error cargando:", e); }
-}
-
-// RENDERIZAR TABLA Y SUMA
-function renderizarTabla(lista) {
-    const tabla = document.getElementById('tabla-cuerpo');
-    const pie = document.getElementById('tabla-pie');
-    tabla.innerHTML = ""; 
-    let sumaSalarios = 0;
-
-    lista.forEach(t => {
-        sumaSalarios += Number(t.salario || 0);
-        tabla.innerHTML += `
-            <tr>
-                <td>${t.id}</td>
-                <td>${t.nombre} ${t.apellido} <br><small>${t.dni}</small></td>
-                <td>${t.cargo}</td>
-                <td>$${Number(t.salario).toLocaleString()}</td>
-                <td class="no-print">
-                    <button class="outline" onclick='prepararEdicion(${JSON.stringify(t)})'>✏️</button>
-                    <button class="outline secondary" onclick="eliminarTrabajador(${t.id})">🗑️</button>
-                </td>
-            </tr>`;
-    });
-
-    pie.innerHTML = `<tr><td colspan="3" style="text-align:right">TOTAL NÓMINA:</td><td>$${sumaSalarios.toLocaleString()}</td><td class="no-print"></td></tr>`;
-}
-
-// BUSCADOR REACTIVO
-document.getElementById('buscador').addEventListener('input', (e) => {
-    const texto = e.target.value.toLowerCase();
-    const filtrados = trabajadoresLocales.filter(t => 
-        `${t.nombre} ${t.apellido} ${t.cargo} ${t.dni}`.toLowerCase().includes(texto)
-    );
-    renderizarTabla(filtrados);
-});
-
-// GUARDAR / ACTUALIZAR
-document.getElementById('workerForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const data = {
-        nombre: document.getElementById('nombre').value,
-        apellido: document.getElementById('apellido').value,
-        dni: document.getElementById('dni').value,
-        cargo: document.getElementById('cargo').value,
-        salario: parseFloat(document.getElementById('salario').value)
-    };
-
-    const metodo = editandoId ? 'PUT' : 'POST';
-    const url = editandoId ? `${API_URL}/${editandoId}` : API_URL;
-
-    await fetch(url, {
-        method: metodo,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    });
-
-    editandoId = null;
-    e.target.reset();
-    document.getElementById('titulo-form').innerText = "➕ Añadir Trabajador";
-    document.getElementById('btn-guardar').innerText = "Guardar Trabajador";
-    cargarTrabajadores();
-});
-
-// FUNCIONES DE REPORTE CORREGIDAS
-function exportarExcel() {
-    if (trabajadoresLocales.length === 0) return alert("No hay datos");
-
-    let csv = "\uFEFFID,Nombre,Apellido,DNI,Cargo,Salario\n";
-    let total = 0;
-    trabajadoresLocales.forEach(t => {
-        csv += `${t.id},"${t.nombre}","${t.apellido}","${t.dni}","${t.cargo}",${t.salario}\n`;
-        total += Number(t.salario || 0);
-    });
-    csv += `\n,,,TOTAL,$${total}`;
-
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "reporte_personal.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-function generarPDF() {
-    window.print();
-}
-
-// OTRAS FUNCIONES
-function prepararEdicion(t) {
-    editandoId = t.id;
-    document.getElementById('nombre').value = t.nombre;
-    document.getElementById('apellido').value = t.apellido;
-    document.getElementById('dni').value = t.dni;
-    document.getElementById('cargo').value = t.cargo;
-    document.getElementById('salario').value = t.salario;
-    document.getElementById('titulo-form').innerText = "✏️ Editando #" + t.id;
-    document.getElementById('btn-guardar').innerText = "Actualizar Cambios";
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-async function eliminarTrabajador(id) {
-    if (confirm("¿Eliminar registro?")) {
-        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-        cargarTrabajadores();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('No se pudieron cargar los datos del servidor.');
     }
 }
 
-cargarTrabajadores();
+// 2. Guardar nuevo trabajador (POST)
+async function guardarTrabajador(datos) {
+    try {
+        const res = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+        });
+
+        if (res.ok) {
+            cerrarModal();
+            await cargarTrabajadores(); // Recargar tabla
+        } else {
+            alert('Error al guardar en el servidor');
+        }
+    } catch (error) {
+        console.error('Error al enviar datos:', error);
+    }
+}
+
+// 3. Eliminar trabajador (DELETE)
+async function eliminarTrabajador(id) {
+    if (!confirm('¿Estás seguro de eliminar a este trabajador?')) return;
+
+    try {
+        const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+            await cargarTrabajadores();
+        }
+    } catch (error) {
+        console.error('Error al eliminar:', error);
+    }
+}
+
+// --- RENDERIZADO ---
+
+function renderizarTabla(lista) {
+    const cuerpo = document.getElementById('tabla-cuerpo');
+    cuerpo.innerHTML = '';
+
+    lista.forEach(t => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td><strong>${t.nombre}</strong></td>
+            <td>${t.puesto}</td>
+            <td><code>${t.dni}</code></td>
+            <td><ins>$${parseFloat(t.salario).toLocaleString()}</ins></td>
+            <td>
+                <button class="outline contrast" onclick="eliminarTrabajador('${t.id}')" style="padding: 2px 10px; font-size: 12px;">
+                    Eliminar
+                </button>
+            </td>
+        `;
+        cuerpo.appendChild(fila);
+    });
+}
+
+// --- EVENTOS ---
+function configurarEscuchadores() {
+    formulario.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const datos = {
+            nombre: document.getElementById('nombre').value,
+            dni: document.getElementById('dni').value,
+            puesto: document.getElementById('puesto').value,
+            salario: parseFloat(document.getElementById('salario').value)
+        };
+
+        await guardarTrabajador(datos);
+    });
+}

@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    
+
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión de Personal</title>
+    <title>Gestión de Personal</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
-        .header-acciones { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        /* REGLAS PARA EL PDF (IMPRESIÓN) */
-        @media print { 
-            #seccion-formulario, #buscador-cont, .no-print, button { display: none !important; }
-            body { background: white !important; color: black !important; padding: 0; }
-            table { width: 100%; border: 1px solid #ccc; }
-            tfoot { display: table-footer-group; }
-        }
+        :root { --primary: #007bff; }
+        body { padding: 20px; background-color: #f8f9fa; }
+        .container-fluid { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        table { font-size: 0.9rem; }
+        ins { text-decoration: none; font-weight: bold; color: #2ecc71; } /* Para el salario */
     </style>
+
+
+
 </head>
 <body class="container">
     <header>
@@ -70,5 +73,44 @@
         </section>
     </main>
     <script src="app.js"></script>
+<dialog id="modal-trabajador">
+  <article>
+    <header>
+      <a href="#close" aria-label="Close" class="close" onclick="cerrarModal()"></a>
+      <h3>📝 Registro de Trabajador</h3>
+    </header>
+    <form id="form-trabajador">
+      <div class="grid">
+        <label for="nombre">
+          Nombre Completo
+          <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
+        </label>
+        
+        <label for="dni">
+          DNI / Identificación
+          <input type="text" id="dni" name="dni" placeholder="12345678X" required>
+        </label>
+      </div>
+
+      <div class="grid">
+        <label for="puesto">
+          Puesto de Trabajo
+          <input type="text" id="puesto" name="puesto" placeholder="Ej. Gerente" required>
+        </label>
+        
+        <label for="salario">
+          Salario Mensual
+          <input type="number" id="salario" name="salario" placeholder="0.00" step="0.01" required>
+        </label>
+      </div>
+
+      <footer>
+        <button type="button" class="secondary" onclick="cerrarModal()">Cancelar</button>
+        <button type="submit">Guardar Trabajador</button>
+      </footer>
+    </form>
+  </article>
+</dialog>
+
 </body>
 </html>

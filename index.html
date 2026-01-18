@@ -9,7 +9,7 @@
     
     <style>
         :root {
-            --primary: #10ad9b; /* Color verde esmeralda profesional */
+            --primary: #10ad9b; /* Color verde esmeralda */
         }
         body {
             padding: 20px;
@@ -35,12 +35,14 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        table {
-            margin-bottom: 0;
-        }
-        /* Estilo para el modal */
+        /* Ajuste para que el modal no sea demasiado ancho */
         dialog article {
             max-width: 500px;
+        }
+        /* Estilo para mensajes de carga */
+        .loading-text {
+            text-align: center;
+            color: #888;
         }
     </style>
 </head>
@@ -50,7 +52,7 @@
         <section class="header-section">
             <hgroup>
                 <h1>👷 Gestión de Personal</h1>
-                <h2>Panel Administrativo</h2>
+                <p>Panel Administrativo</p>
             </hgroup>
             <button class="outline" onclick="abrirModal()">+ Añadir Trabajador</button>
         </section>
@@ -69,7 +71,7 @@
                     </thead>
                     <tbody id="tabla-cuerpo">
                         <tr>
-                            <td colspan="5" style="text-align: center;">Cargando datos...</td>
+                            <td colspan="5" class="loading-text">Cargando datos del servidor...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -85,14 +87,14 @@
             </header>
             <form id="form-trabajador">
                 <label for="nombre">Nombre Completo</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Nombre y Apellido" required>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
                 
                 <div class="grid">
                     <label for="dni">DNI
-                        <input type="text" id="dni" name="dni" placeholder="Identificación" required>
+                        <input type="text" id="dni" name="dni" placeholder="12345678X" required>
                     </label>
                     <label for="puesto">Puesto
-                        <input type="text" id="puesto" name="puesto" placeholder="Cargo" required>
+                        <input type="text" id="puesto" name="puesto" placeholder="Ej. Analista" required>
                     </label>
                 </div>
 
@@ -108,5 +110,6 @@
     </dialog>
 
     <script src="app.js"></script>
+
 </body>
 </html>

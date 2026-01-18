@@ -110,7 +110,7 @@ function renderizarTabla(lista) {
 
         fila.innerHTML = `
             <td><strong>${t.nombre}</strong></td>
-            <td>${t.puesto}</td>
+            <td>${t.cargo}</td>
             <td><code>${t.dni}</code></td>
             <td><ins>${salarioFormateado}</ins></td>
             <td>
@@ -132,7 +132,7 @@ function configurarEscuchadores() {
         const datos = {
             nombre: document.getElementById('nombre').value,
             dni: document.getElementById('dni').value,
-            puesto: document.getElementById('puesto').value,
+            cargo: document.getElementById('cargo').value,
             salario: parseFloat(document.getElementById('salario').value)
         };
 

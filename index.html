@@ -1,116 +1,112 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    
-
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Personal</title>
+    <title>Sistema de Gestión de Personal</title>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    
     <style>
-        :root { --primary: #007bff; }
-        body { padding: 20px; background-color: #f8f9fa; }
-        .container-fluid { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        table { font-size: 0.9rem; }
-        ins { text-decoration: none; font-weight: bold; color: #2ecc71; } /* Para el salario */
+        :root {
+            --primary: #10ad9b; /* Color verde esmeralda profesional */
+        }
+        body {
+            padding: 20px;
+            background-color: #f4f7f6;
+        }
+        main {
+            max-width: 1000px;
+            margin: auto;
+        }
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .card-table {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        table {
+            margin-bottom: 0;
+        }
+        /* Estilo para el modal */
+        dialog article {
+            max-width: 500px;
+        }
     </style>
-
-
-
 </head>
-<body class="container">
-    <header>
-        <h1>👷 Gestión de Personal</h1>
-    </header>
+<body>
 
     <main>
-        <section id="seccion-formulario">
-            <article>
-                <header><h3 id="titulo-form">➕ Añadir Trabajador</h3></header>
-                <form id="workerForm">
-                    <div class="grid">
-                        <input type="text" id="nombre" placeholder="Nombre" required>
-                        <input type="text" id="apellido" placeholder="Apellido" required>
-                    </div>
-                    <div class="grid">
-                        <input type="text" id="dni" placeholder="DNI" required>
-                        <input type="text" id="cargo" placeholder="Cargo">
-                        <input type="number" id="salario" placeholder="Salario">
-                    </div>
-                    <button type="submit" id="btn-guardar">Guardar Trabajador</button>
-                </form>
-            </article>
+        <section class="header-section">
+            <hgroup>
+                <h1>👷 Gestión de Personal</h1>
+                <h2>Panel Administrativo</h2>
+            </hgroup>
+            <button class="outline" onclick="abrirModal()">+ Añadir Trabajador</button>
         </section>
 
-        <hr>
-
-        <section id="seccion-tabla">
-            <div class="header-acciones">
-                <h3>📋 Lista de Personal</h3>
-                <div id="buscador-cont" style="display: flex; gap: 10px; align-items: center;">
-                    <button class="outline contrast" onclick="generarPDF()">📄 PDF</button>
-                    <button class="outline contrast" onclick="exportarExcel()">📊 Excel</button>
-                    <input type="search" id="buscador" placeholder="🔍 Buscar..." style="max-width: 250px; margin: 0;">
-                </div>
-            </div>
-
+        <section class="card-table">
             <figure>
-                <table>
+                <table role="grid">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Trabajador</th>
-                            <th>Cargo</th>
+                            <th>Nombre</th>
+                            <th>Puesto</th>
+                            <th>DNI</th>
                             <th>Salario</th>
-                            <th class="no-print">Acciones</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="tabla-cuerpo"></tbody>
-                    <tfoot id="tabla-pie" style="font-weight: bold; background: #f1f1f1;"></tfoot>
+                    <tbody id="tabla-cuerpo">
+                        <tr>
+                            <td colspan="5" style="text-align: center;">Cargando datos...</td>
+                        </tr>
+                    </tbody>
                 </table>
             </figure>
         </section>
     </main>
+
+    <dialog id="modal-trabajador">
+        <article>
+            <header>
+                <a href="#close" aria-label="Close" class="close" onclick="cerrarModal()"></a>
+                <h3>📝 Registro de Trabajador</h3>
+            </header>
+            <form id="form-trabajador">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre y Apellido" required>
+                
+                <div class="grid">
+                    <label for="dni">DNI
+                        <input type="text" id="dni" name="dni" placeholder="Identificación" required>
+                    </label>
+                    <label for="puesto">Puesto
+                        <input type="text" id="puesto" name="puesto" placeholder="Cargo" required>
+                    </label>
+                </div>
+
+                <label for="salario">Salario Mensual</label>
+                <input type="number" id="salario" name="salario" step="0.01" placeholder="0.00" required>
+
+                <footer>
+                    <button type="button" class="secondary" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit">Guardar Trabajador</button>
+                </footer>
+            </form>
+        </article>
+    </dialog>
+
     <script src="app.js"></script>
-<dialog id="modal-trabajador">
-  <article>
-    <header>
-      <a href="#close" aria-label="Close" class="close" onclick="cerrarModal()"></a>
-      <h3>📝 Registro de Trabajador</h3>
-    </header>
-    <form id="form-trabajador">
-      <div class="grid">
-        <label for="nombre">
-          Nombre Completo
-          <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
-        </label>
-        
-        <label for="dni">
-          DNI / Identificación
-          <input type="text" id="dni" name="dni" placeholder="12345678X" required>
-        </label>
-      </div>
-
-      <div class="grid">
-        <label for="puesto">
-          Puesto de Trabajo
-          <input type="text" id="puesto" name="puesto" placeholder="Ej. Gerente" required>
-        </label>
-        
-        <label for="salario">
-          Salario Mensual
-          <input type="number" id="salario" name="salario" placeholder="0.00" step="0.01" required>
-        </label>
-      </div>
-
-      <footer>
-        <button type="button" class="secondary" onclick="cerrarModal()">Cancelar</button>
-        <button type="submit">Guardar Trabajador</button>
-      </footer>
-    </form>
-  </article>
-</dialog>
-
 </body>
 </html>

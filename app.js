@@ -30,6 +30,7 @@ function cerrarModal() {
 async function cargarTrabajadores() {
     try {
         const res = await fetch(API_URL);
+       credentials: 'include' // <--- ESTO ES VITAL PARA CLOUDFLARE ACCESS
         if (!res.ok) throw new Error('Error al obtener datos');
         
         trabajadoresLocales = await res.json();
@@ -46,7 +47,8 @@ async function guardarTrabajador(datos) {
         const res = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datos)
+            body: JSON.stringify(datos),
+            credentials: 'include' // <--- TAMBIÉN AQUÍ
         });
 
         if (res.ok) {

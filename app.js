@@ -1,6 +1,6 @@
 // Configuración inicial
-const API_URL = 'https://crud-trabajadores.mauxmora.workers.dev';
-
+//const API_URL = 'https://crud-trabajadores.mauxmora.workers.dev';
+const API_URL = 'https://crud-trabajadores.mauxmora.workers.dev/api/trabajadores';
 
 
 // Estado global de la aplicación

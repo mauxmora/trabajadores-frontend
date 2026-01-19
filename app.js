@@ -145,3 +145,23 @@ function configurarEscuchadores() {
         await guardarTrabajador(datos);
     });
 }
+
+function actualizarReportes(lista) {
+    const totalPersonal = lista.length;
+    
+    // Calcular Nómina Total
+    const nominaTotal = lista.reduce((sum, t) => sum + parseFloat(t.salario || 0), 0);
+    
+    // Calcular Promedio
+    const promedio = totalPersonal > 0 ? (nominaTotal / totalPersonal) : 0;
+    
+    // Contar Activos e Inactivos
+    const activos = lista.filter(t => t.activo === 1 || t.activo === true).length;
+    const inactivos = totalPersonal - activos;
+
+    // Actualizar el DOM (la pantalla)
+    document.getElementById('rep-total').innerText = totalPersonal;
+    document.getElementById('rep-nomina').innerText = nominaTotal.toLocaleString('es-ES', { style: 'currency', currency: 'USD' });
+    document.getElementById('rep-promedio').innerText = promedio.toLocaleString('es-ES', { style: 'currency', currency: 'USD' });
+    document.getElementById('rep-activos').innerText = `${activos} / ${inactivos}`;
+}

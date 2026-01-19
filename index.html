@@ -96,35 +96,44 @@
                 <a href="#close" aria-label="Close" class="close" onclick="cerrarModal()"></a>
                 <h3>📝 Registro de Trabajador</h3>
             </header>
-            <form id="form-trabajador">
-                <label for="nombre">Nombre Completo</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
+           <form id="form-trabajador">
+    <div class="grid">
+        <label for="nombre">Nombre
+            <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan" required>
+        </label>
+        <label for="apellido">Apellido
+            <input type="text" id="apellido" name="apellido" placeholder="Ej. Pérez" required>
+        </label>
+    </div>
 
-                <div class="grid">
-                    <label for="dni">DNI
-                        <input type="text" id="dni" name="dni" placeholder="12345678X" required>
-                    </label>
-                    <label for="cargo">Cargo
-                        <input type="text" id="cargo" name="cargo" placeholder="Ej. Analista" required>
-                    </label>
+    <div class="grid">
+        <label for="dni">DNI
+            <input type="text" id="dni" name="dni" placeholder="12345678X" required>
+        </label>
+        <label for="cargo">Cargo
+            <input type="text" id="cargo" name="cargo" placeholder="Ej. Analista" required>
+        </label>
+    </div>
 
-                    <label for="fecha_contratacion">Fecha de Contratación
-                        <input type="date" id="fecha_contratacion" name="fecha_contratacion" required>
-                    </label>
-                    <label for="activo" style="margin-top: 35px;">
-                        <input type="checkbox" id="activo" name="activo" role="switch" checked>
-                        Empleado Activo
-                    </label>
-                </div>
+    <div class="grid">
+        <label for="salario">Salario Mensual
+            <input type="number" id="salario" name="salario" step="0.01" placeholder="0.00" required>
+        </label>
+        <label for="fecha_contratacion">Fecha de Contratación
+            <input type="date" id="fecha_contratacion" name="fecha_contratacion" required>
+        </label>
+    </div>
 
-                <label for="salario">Salario Mensual</label>
-                <input type="number" id="salario" name="salario" step="0.01" placeholder="0.00" required>
+    <label for="activo">
+        <input type="checkbox" id="activo" name="activo" role="switch" checked>
+        Trabajador en activo
+    </label>
 
-                <footer>
-                    <button type="button" class="secondary" onclick="cerrarModal()">Cancelar</button>
-                    <button type="submit">Guardar Trabajador</button>
-                </footer>
-            </form>
+    <footer>
+        <button type="button" class="secondary" onclick="cerrarModal()">Cancelar</button>
+        <button type="submit">Guardar Trabajador</button>
+    </footer>
+</form>
         </article>
     </dialog>
 

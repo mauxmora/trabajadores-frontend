@@ -33,11 +33,11 @@ async function cargarTrabajadores() {
         // 'credentials: include' permite que la sesión de Cloudflare Access 
         // pase del frontend al backend sin errores 401.
         const res = await fetch(API_URL, { credentials: 'include' });
-        
+
         if (!res.ok) {
             throw new Error(`Error HTTP: ${res.status}`);
         }
-        
+
         trabajadoresLocales = await res.json();
         renderizarTabla(trabajadoresLocales);
     } catch (error) {
@@ -75,11 +75,11 @@ async function eliminarTrabajador(id) {
     if (!confirm('¿Estás seguro de eliminar este registro?')) return;
 
     try {
-        const res = await fetch(`${API_URL}/${id}`, { 
+        const res = await fetch(`${API_URL}/${id}`, {
             method: 'DELETE',
             credentials: 'include'
         });
-        
+
         if (res.ok) {
             await cargarTrabajadores();
         } else {
@@ -103,9 +103,9 @@ function renderizarTabla(lista) {
     lista.forEach(t => {
         const fila = document.createElement('tr');
         // Usamos toLocaleString para que el salario se vea profesional (ej: $1,200.00)
-        const salarioFormateado = parseFloat(t.salario).toLocaleString('es-ES', { 
-            style: 'currency', 
-            currency: 'USD' 
+        const salarioFormateado = parseFloat(t.salario).toLocaleString('es-ES', {
+            style: 'currency',
+            currency: 'USD'
         });
 
         fila.innerHTML = `
@@ -131,15 +131,15 @@ function renderizarTabla(lista) {
 function configurarEscuchadores() {
     formulario.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const datos = {
             nombre: document.getElementById('nombre').value,
             dni: document.getElementById('dni').value,
             cargo: document.getElementById('cargo').value,
             salario: parseFloat(document.getElementById('salario').value),
-        fecha_contratacion: document.getElementById('fecha_contratacion').value,
-    activo: document.getElementById('activo').checked
-        
+            fecha_contratacion: document.getElementById('fecha_contratacion').value,
+            activo: document.getElementById('activo').checked
+
         };
 
         await guardarTrabajador(datos);

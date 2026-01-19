@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestión de Personal</title>
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    
+
     <style>
         :root {
-            --primary: #10ad9b; /* Color verde esmeralda */
+            --primary: #10ad9b;
+            /* Color verde esmeralda */
         }
+
         body {
             padding: 20px;
             background-color: #f4f7f6;
         }
+
         main {
             max-width: 1000px;
             margin: auto;
         }
+
         .header-section {
             display: flex;
             justify-content: space-between;
@@ -27,18 +32,21 @@
             background: white;
             padding: 1.5rem;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
+
         .card-table {
             background: white;
             padding: 1rem;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
+
         /* Ajuste para que el modal no sea demasiado ancho */
         dialog article {
             max-width: 500px;
         }
+
         /* Estilo para mensajes de carga */
         .loading-text {
             text-align: center;
@@ -46,6 +54,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <main>
@@ -90,7 +99,7 @@
             <form id="form-trabajador">
                 <label for="nombre">Nombre Completo</label>
                 <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
-                
+
                 <div class="grid">
                     <label for="dni">DNI
                         <input type="text" id="dni" name="dni" placeholder="12345678X" required>
@@ -100,12 +109,12 @@
                     </label>
 
                     <label for="fecha_contratacion">Fecha de Contratación
-        <input type="date" id="fecha_contratacion" name="fecha_contratacion" required>
-    </label>
-    <label for="activo" style="margin-top: 35px;">
-        <input type="checkbox" id="activo" name="activo" role="switch" checked>
-        Empleado Activo
-    </label>
+                        <input type="date" id="fecha_contratacion" name="fecha_contratacion" required>
+                    </label>
+                    <label for="activo" style="margin-top: 35px;">
+                        <input type="checkbox" id="activo" name="activo" role="switch" checked>
+                        Empleado Activo
+                    </label>
                 </div>
 
                 <label for="salario">Salario Mensual</label>
@@ -122,4 +131,5 @@
     <script src="app.js"></script>
 
 </body>
+
 </html>

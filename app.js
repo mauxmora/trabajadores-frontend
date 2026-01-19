@@ -112,6 +112,9 @@ function renderizarTabla(lista) {
             <td><strong>${t.nombre}</strong></td>
             <td>${t.cargo}</td>
             <td><code>${t.dni}</code></td>
+            <td><small>${t.fecha_contratacion}</small></td>
+    <td>${t.activo ? '✅' : '❌'}</td>
+            
             <td><ins>${salarioFormateado}</ins></td>
             <td>
                 <button class="outline contrast" onclick="eliminarTrabajador('${t.id}')" 
@@ -133,7 +136,10 @@ function configurarEscuchadores() {
             nombre: document.getElementById('nombre').value,
             dni: document.getElementById('dni').value,
             cargo: document.getElementById('cargo').value,
-            salario: parseFloat(document.getElementById('salario').value)
+            salario: parseFloat(document.getElementById('salario').value),
+        fecha_contratacion: document.getElementById('fecha_contratacion').value,
+    activo: document.getElementById('activo').checked
+        
         };
 
         await guardarTrabajador(datos);

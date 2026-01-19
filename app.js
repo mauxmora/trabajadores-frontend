@@ -92,6 +92,7 @@ async function eliminarTrabajador(id) {
 
 // --- RENDERIZADO DE TABLA ---
 function renderizarTabla(lista) {
+    actualizarReportes(lista); // <--- Llama a los reportes aquí
     const cuerpo = document.getElementById('tabla-cuerpo');
     cuerpo.innerHTML = '';
 
